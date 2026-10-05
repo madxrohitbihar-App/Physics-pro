@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics Wallah</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body, html {
+            width: 100%;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            overflow: hidden;
+        }
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100vh;
+            position: relative;
+        }
+        
+        /* Top Custom Header & Action Bar wrapper taaki ek sath hide/show ho sakein */
+        #top-ui-wrapper {
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        /* Top Custom Header - Pure White Background Match */
+        .top-header {
+            background: #ffffff;
+            color: #111827;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 65px;
+        }
+        .brand-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .brand-info img {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #2563eb;
+        }
+        .brand-text h1 {
+            font-size: 18px;
+            color: #111827;
+            font-weight: 700;
+        }
+        .developer-credit {
+            font-size: 10px;
+            color: #6b7280;
+            margin-top: 2px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Custom Patti - Pure White Background */
+        .custom-action-bar {
+            background: #ffffff;
+            padding: 6px 15px 10px 15px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        
+        /* Buttons with White Background and Black Bold Text */
+        .action-btn {
+            background: #ffffff;
+            color: #000000;
+            border: 1.5px solid #d1d5db;
+            padding: 9px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
+        }
+        .action-btn:hover {
+            background: #f3f4f6;
+        }
+
+        /* Iframe Container */
+        .iframe-container {
+            flex-grow: 1;
+            width: 100%;
+            background: #ffffff;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Iframe position and height */
+        iframe {
+            width: 100%;
+            height: calc(100% + 215px);
+            margin-top: -215px;
+            border: none;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Header aur Patti ko ek wrapper me rakha hai taaki hide/show control ho sake -->
+        <div id="top-ui-wrapper">
+            <!-- Top Custom Header -->
+            <header class="top-header">
+                <div class="brand-info">
+                    <img src="https://i.postimg.cc/2yf3sPqb/IMG-20260731-232914-129.jpg" alt="Logo">
+                    <div class="brand-text">
+                        <h1>Physics Wallah</h1>
+                        <div class="developer-credit">Developer By MedxrohitBihar</div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Custom Patti / Action Buttons with White Background & Black Bold Text -->
+            <div class="custom-action-bar">
+                <a href="https://t.me/+cw7TRotEzcczNThl" class="action-btn">📢 Join Telegram</a>
+                <a href="https://whatsapp.com/channel/0029Vb6FhReEquiLz1jNH00o" class="action-btn">💬 Join WhatsApp</a>
+            </div>
+        </div>
+
+        <!-- Main Website Area -->
+        <div class="iframe-container">
+            <iframe id="content-iframe" src="https://vidcloud.eu.org/#batches" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <script>
+        // Fullscreen change listener detect karega ki video fullscreen hui hai ya nahi
+        document.addEventListener('fullscreenchange', handleFullscreen);
+        document.addEventListener('webkitfullscreenchange', handleFullscreen);
+        document.addEventListener('mozfullscreenchange', handleFullscreen);
+        document.addEventListener('msfullscreenchange', handleFullscreen);
+
+        function handleFullscreen() {
+            const topUi = document.getElementById('top-ui-wrapper');
+            const iframe = document.getElementById('content-iframe');
+            
+            if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
+                topUi.style.display = 'none';
+                iframe.style.height = '100%';
+                iframe.style.marginTop = '0';
+            } else {
+                topUi.style.display = 'flex';
+                iframe.style.height = 'calc(100% + 215px)';
+                iframe.style.marginTop = '-215px';
+            }
+        }
+    </script>
+
+</body>
+</html>
