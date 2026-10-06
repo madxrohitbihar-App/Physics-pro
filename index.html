@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Physics Wallah</title>
+    <title>PW (Physics Wallah)</title>
     <style>
         * {
             margin: 0;
@@ -14,7 +14,7 @@
             width: 100%;
             height: 100%;
             font-family: Arial, sans-serif;
-            background-color: #ffffff;
+            background-color: #121212;
             overflow: hidden;
         }
         .app-container {
@@ -24,148 +24,205 @@
             height: 100vh;
             position: relative;
         }
-        
-        /* Top Custom Header & Action Bar wrapper taaki ek sath hide/show ho sakein */
-        #top-ui-wrapper {
-            display: flex;
-            flex-direction: column;
-            flex-shrink: 0;
-            transition: all 0.3s ease;
-        }
-
-        /* Top Custom Header - Pure White Background Match */
+        /* Top Branding Header - PW Theme Matching */
         .top-header {
-            background: #ffffff;
-            color: #111827;
-            padding: 12px 18px;
+            background: #1e293b;
+            color: white;
+            padding: 12px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            border-bottom: 2px solid #334155;
             min-height: 65px;
+            flex-shrink: 0;
+            z-index: 100;
         }
         .brand-info {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
         }
         .brand-info img {
             width: 42px;
             height: 42px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid #2563eb;
+            border: 2px solid #38bdf8;
         }
         .brand-text h1 {
-            font-size: 18px;
-            color: #111827;
-            font-weight: 700;
+            font-size: 19px;
+            color: #f8fafc;
+            font-weight: 600;
         }
         .developer-credit {
             font-size: 10px;
-            color: #6b7280;
+            color: #94a3b8;
             margin-top: 2px;
             letter-spacing: 0.5px;
         }
-
-        /* Custom Patti - Pure White Background */
-        .custom-action-bar {
-            background: #ffffff;
-            padding: 6px 15px 10px 15px;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-        
-        /* Buttons with White Background and Black Bold Text */
-        .action-btn {
-            background: #ffffff;
-            color: #000000;
-            border: 1.5px solid #d1d5db;
-            padding: 9px 12px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            cursor: pointer;
-            text-decoration: none;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            transition: all 0.2s ease;
-        }
-        .action-btn:hover {
-            background: #f3f4f6;
-        }
-
         /* Iframe Container */
         .iframe-container {
             flex-grow: 1;
             width: 100%;
-            background: #ffffff;
+            background: #121212;
             position: relative;
             overflow: hidden;
         }
-        
-        /* Iframe position and height */
+        /* Halka sa niche adjust kiya gaya hai (-75px) */
         iframe {
             width: 100%;
-            height: calc(100% + 215px);
-            margin-top: -215px;
+            height: calc(100% + 75px);
+            margin-top: -75px;
             border: none;
             display: block;
+        }
+
+        /* Popup Styles */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(6px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .popup-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .popup-box {
+            background: #1e293b;
+            width: 90%;
+            max-width: 380px;
+            padding: 30px 20px 25px 20px;
+            border-radius: 14px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.6);
+            border: 2px solid #334155;
+            text-align: center;
+            color: #f8fafc;
+            position: relative;
+            transform: scale(0.8);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .popup-overlay.show .popup-box {
+            transform: scale(1);
+        }
+        .close-icon {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 30px;
+            height: 30px;
+            background: #334155;
+            color: #f8fafc;
+            border: none;
+            border-radius: 50%;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .close-icon:hover {
+            background: #ef4444;
+            transform: scale(1.1);
+        }
+        .popup-box h2 {
+            font-size: 20px;
+            margin-bottom: 8px;
+            color: #38bdf8;
+        }
+        .popup-box p {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-bottom: 20px;
+        }
+        .popup-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+        .whatsapp-btn {
+            background-color: #25D366;
+            color: white;
+        }
+        .whatsapp-btn:hover {
+            background-color: #20ba5a;
+        }
+        .telegram-btn {
+            background-color: #0088cc;
+            color: white;
+        }
+        .telegram-btn:hover {
+            background-color: #0077b5;
         }
     </style>
 </head>
 <body>
 
-    <div class="app-container">
-        <!-- Header aur Patti ko ek wrapper me rakha hai taaki hide/show control ho sake -->
-        <div id="top-ui-wrapper">
-            <!-- Top Custom Header -->
-            <header class="top-header">
-                <div class="brand-info">
-                    <img src="https://i.postimg.cc/2yf3sPqb/IMG-20260731-232914-129.jpg" alt="Logo">
-                    <div class="brand-text">
-                        <h1>Physics Wallah</h1>
-                        <div class="developer-credit">Developer By MedxrohitBihar</div>
-                    </div>
-                </div>
-            </header>
-
-            <!-- Custom Patti / Action Buttons with White Background & Black Bold Text -->
-            <div class="custom-action-bar">
-                <a href="https://t.me/+cw7TRotEzcczNThl" class="action-btn">📢 Join Telegram</a>
-                <a href="https://whatsapp.com/channel/0029Vb6FhReEquiLz1jNH00o" class="action-btn">💬 Join WhatsApp</a>
-            </div>
+    <!-- Popup Modal -->
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-box">
+            <button class="close-icon" onclick="closePopup()">✕</button>
+            <h2>Join Our Updates</h2>
+            <p>Important links ke liye hamare official channel ko join karein!</p>
+            
+            <a href="https://whatsapp.com/channel/0029Vb6FhReEquiLz1jNH00o" target="_blank" class="popup-btn whatsapp-btn">
+                Join WhatsApp Channel
+            </a>
+            
+            <a href="https://t.me/+cw7TRotEzcczNThl" target="_blank" class="popup-btn telegram-btn">
+                Join Telegram Group
+            </a>
         </div>
+    </div>
 
-        <!-- Main Website Area -->
+    <div class="app-container">
+        <!-- Top Custom Header -->
+        <header class="top-header">
+            <div class="brand-info">
+                <img src="https://i.postimg.cc/2yf3sPqb/IMG-20260731-232914-129.jpg" alt="Logo">
+                <div class="brand-text">
+                    <h1>PW (Physics Wallah)</h1>
+                    <div class="developer-credit">Developer By MedxrohitBihar</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Proxy Website Area -->
         <div class="iframe-container">
-            <iframe id="content-iframe" src="https://vidcloud.eu.org/#batches" allowfullscreen></iframe>
+            <iframe src="https://pw-t2.space-z.ai/" allowfullscreen></iframe>
         </div>
     </div>
 
     <script>
-        // Fullscreen change listener detect karega ki video fullscreen hui hai ya nahi
-        document.addEventListener('fullscreenchange', handleFullscreen);
-        document.addEventListener('webkitfullscreenchange', handleFullscreen);
-        document.addEventListener('mozfullscreenchange', handleFullscreen);
-        document.addEventListener('msfullscreenchange', handleFullscreen);
-
-        function handleFullscreen() {
-            const topUi = document.getElementById('top-ui-wrapper');
-            const iframe = document.getElementById('content-iframe');
-            
-            if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
-                topUi.style.display = 'none';
-                iframe.style.height = '100%';
-                iframe.style.marginTop = '0';
-            } else {
-                topUi.style.display = 'flex';
-                iframe.style.height = 'calc(100% + 215px)';
-                iframe.style.marginTop = '-215px';
+        window.addEventListener('load', function() {
+            if (!sessionStorage.getItem('popupShown')) {
+                setTimeout(function() {
+                    document.getElementById('popupOverlay').classList.add('show');
+                    sessionStorage.setItem('popupShown', 'true');
+                }, 3000);
             }
+        });
+
+        function closePopup() {
+            document.getElementById('popupOverlay').classList.remove('show');
         }
     </script>
 
